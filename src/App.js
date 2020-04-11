@@ -12,6 +12,19 @@ function App() {
   const [networkChange, setNetworkChange] = useState(null);
   const [balance, setBalance] = useState(0);
 
+  async function getAccountMetamask() {
+    const accounts = await window.ethereum.enable();
+    const provider = window["ethereum"];
+    const web3 = new Web3(Web3.givenProvider);
+    const account = accounts[0];
+    setEthWallet(account);
+    setNetwork(provider.networkVersion);
+    web3.eth.getBalance(account).then((result) => {
+      const balance = web3.utils.fromWei(result, "ether");
+      setBalance(balance);
+    });
+  }
+
   useEffect(() => {
     if (networkChange) {
       getAccountMetamask();
@@ -52,20 +65,6 @@ function App() {
       default:
         return "Unknown";
     }
-  }
-
-  async function getAccountMetamask() {
-    const accounts = await window.ethereum.enable();
-    const provider = window["ethereum"];
-    const web3 = new Web3(Web3.givenProvider);
-    const account = accounts[0];
-    setEthWallet(account);
-    setNetwork(provider.networkVersion);
-    console.log(provider);
-    web3.eth.getBalance(account).then((result) => {
-      const balance = web3.utils.fromWei(result, "ether");
-      setBalance(balance);
-    });
   }
 
   return (
