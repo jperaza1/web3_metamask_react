@@ -3,6 +3,7 @@ import "./App.css";
 import logo from "./assets/img/logo.svg";
 import NotMetamask from "./components/NotMetamask";
 import Web3 from "web3";
+import AppContenido from "./AppContenido";
 
 function App() {
   const [isMetamask, setIsMetamask] = useState(null);
@@ -68,29 +69,13 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <div className="text-center">
-        <h1>Balance ETH</h1>
-        <img src={logo} alt="logo" width="50%" />
-        {ethWallet === null && (
-          <>
-            <h3>usaremos tu direccion de wallet para identificarte!</h3>
-          </>
-        )}
-      </div>
-      <div>
-        {ethWallet !== null && (
-          <>
-            <p>
-              <strong>Wallet: </strong>
-              {ethWallet}
-            </p>
-            <h1>{balance} ETH</h1>
-            <h3>Red: {renderNetworkName(network)}</h3>
-          </>
-        )}
-      </div>
-    </div>
+    <AppContenido
+      logo={logo}
+      ethWallet={ethWallet}
+      balance={balance}
+      renderNetworkName={renderNetworkName}
+      network={network}
+    ></AppContenido>
   );
 }
 
